@@ -3,15 +3,16 @@ package ar.edu.unlam.pb2;
 import java.util.ArrayList;
 
 public class Cuenta {
-	private Integer nroDeCuenta;
-	private String email;
-	private Boolean anuncio;
+	protected Integer nroDeCuenta;
+	protected String email;
+	protected Boolean anuncio;
 	ArrayList <Cancion> listaDeReproduccion = new ArrayList<>();
 
 
 	Cuenta(Integer nroDeCuenta, String email) {
 		this.nroDeCuenta = nroDeCuenta;
 		this.email = email;
+
 	}
 
 	public Integer getNroDeCuenta() {
