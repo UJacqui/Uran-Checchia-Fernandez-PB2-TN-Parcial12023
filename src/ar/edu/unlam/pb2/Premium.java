@@ -1,13 +1,14 @@
 package ar.edu.unlam.pb2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Premium extends Cuenta {
 	ArrayList<Cancion> descargas = new ArrayList<>();
+	private List<Playlist> playlists;
 	
 	Premium(Integer nroDeCuenta, String email) {
 		super(nroDeCuenta, email);
-		
 	}
 
 	public ArrayList<Cancion> getDescargas() {
@@ -18,5 +19,13 @@ public class Premium extends Cuenta {
 		this.descargas = descargas;
 	}
 
+	public List<Playlist> getPlaylists() {
+        return playlists;
+    }
 	
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+    
+
 }
