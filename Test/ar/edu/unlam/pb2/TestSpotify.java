@@ -223,5 +223,100 @@ public class TestSpotify {
 	    assertEquals(cantCancionesEsperadasEnPlaylist2, cantCancionesObtenidas2);
 	}
 	
+	@Test
+	public void queSePuedaReproducirUnaLista() {
+		
+		Integer cantidadDeReproduccionesEsperada = 4;
+		
+		Cuenta cuenta = new Cuenta(1, "mario@outllook.com");
+		Cancion cancion1 = new Cancion("Be the one","pop","Dua Lipa",3.23);
+		Cancion cancion2 = new Cancion("Get Lucky","funk","Daft Punk",6.10);
+		Cancion cancion3 = new Cancion("Memories","electronica","David Guetta",3.31);
+		Cancion cancion4 = new Cancion("It's My Life","rock","Bon Jovi",3.45);
+
+		cuenta.agregarCancion(cancion1);
+		cuenta.agregarCancion(cancion2);
+		cuenta.agregarCancion(cancion3);
+		cuenta.agregarCancion(cancion4);
+		
+		assertEquals(cantidadDeReproduccionesEsperada, cuenta.reproducirLista());
+	}
+		
+	@Test
+	public void queSePuedaCambiarLaCalidadDeLaMusicaEnCuentaPremiumYClassicPeroNoEnFree() {
+		Calidad calidad1 = Calidad.Alta;
+		Calidad calidad2 = Calidad.Maximo;
+		
+		Cuenta cuenta1 = new Premium(1, "mario@outllook.com");
+		Cuenta cuenta2 = new Free(2, "alberto@outlook.com");
+		Cuenta cuenta3 = new Classic(3,"checchia@outlook.com");
+		Spotify config = new Spotify();
+		
+		assertEquals(true, config.cambiarCalidadCancion(cuenta1, calidad1));
+		assertEquals(calidad1, config.getCalidad());
+		assertEquals(false, config.cambiarCalidadCancion(cuenta2, calidad1));
+		assertEquals(false, config.cambiarCalidadCancion(cuenta3, calidad2));
+		assertEquals(true, config.cambiarCalidadCancion(cuenta3, calidad1));
+	}
+	
+	@Test
+	public void queSePuedaEscucharEnOtroDispositivoConCuentaPremiumYClassicPeroNoEnFree() {
+		Dispositivo dispositivo = Dispositivo.TV;
+		
+		Cuenta cuenta1 = new Premium(1, "mario@outllook.com");
+		Cuenta cuenta2 = new Free(2, "alberto@outlook.com");
+		Cuenta cuenta3 = new Classic(3,"checchia@outlook.com");
+		Spotify config = new Spotify();
+		
+		assertEquals(true, config.reproducirEnOtroDispositivo(cuenta1, dispositivo));
+		assertEquals(dispositivo, config.getDispositivo());
+		assertEquals(false, config.reproducirEnOtroDispositivo(cuenta2, dispositivo));
+		assertEquals(true, config.reproducirEnOtroDispositivo(cuenta3, dispositivo));
+	}
+	
+	@Test
+	public void quePuedaTenerDescuentoDel50PorCientoSiLaCuentaEsPremium() {
+		Double precioPremium = 400.00;
+		Double precioClassic = 200.00;
+		Double precioFree = 0.00;
+		Double valorEsperado = 200.00;
+		
+		Cuenta cuenta1 = new Premium(1, "mario@outllook.com");
+		Cuenta cuenta2 = new Free(2, "alberto@outlook.com");
+		Cuenta cuenta3 = new Classic(3,"checchia@outlook.com");
+		Spotify config = new Spotify();
+		
+		assertEquals(valorEsperado, config.descuento(cuenta1, precioPremium));
+	}
+	
+	@Test
+	public void quePuedaTenerDescuentoDel25PorCientoSiLaCuentaEsClassic() {
+		Double precioPremium = 400.00;
+		Double precioClassic = 200.00;
+		Double precioFree = 0.00;
+		Double valorEsperado = 50.00;
+		
+		Cuenta cuenta1 = new Premium(1, "mario@outllook.com");
+		Cuenta cuenta2 = new Free(2, "alberto@outlook.com");
+		Cuenta cuenta3 = new Classic(3,"checchia@outlook.com");
+		Spotify config = new Spotify();
+		
+		assertEquals(valorEsperado, config.descuento(cuenta3, precioClassic));
+	}
+	
+	@Test
+	public void queNoPuedaTenerDescuentoSiLaCuentaEsFree() {
+		Double precioPremium = 400.00;
+		Double precioClassic = 200.00;
+		Double precioFree = 0.00;
+		Double valorEsperado = 0.00;
+		
+		Cuenta cuenta1 = new Premium(1, "mario@outllook.com");
+		Cuenta cuenta2 = new Free(2, "alberto@outlook.com");
+		Cuenta cuenta3 = new Classic(3,"checchia@outlook.com");
+		Spotify config = new Spotify();
+		
+		assertEquals(valorEsperado, config.descuento(cuenta2, precioFree));
+	}
 }
 

@@ -106,6 +106,16 @@ public class Cuenta {
 			System.out.println( cancion.getNombre()+", " + cancion.getCantante() + ", " + cancion.getGenero() +", "+ cancion.getDuracion()+"min.");
 		}
 	}
+	
+	public Integer reproducirLista() {
+		Integer reproducciones = 0;
+		for (Cancion canciones : listaDeReproduccion) {
+			if(canciones != null)
+			reproducciones++;
+		}
+		return reproducciones;
+	}
+	
 	// -------------------------------------Methods
 	
 }

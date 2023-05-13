@@ -2,6 +2,8 @@ package ar.edu.unlam.pb2;
 import java.util.HashSet;
 
 public class Spotify {//menu dentro del reproductor
+	private Dispositivo dispositivo;
+	private Calidad calidad;
 	
 	HashSet<Cuenta> cuentas = new HashSet<>();	
 	HashSet<Cancion> canciones = new HashSet<>();
@@ -44,5 +46,65 @@ public class Spotify {//menu dentro del reproductor
 			System.out.println("No se pudo agregar una nueva playlis, suscribrace al paquete Premium.");
 			}	
 		}
+	
+	public Double descuento(Cuenta cuenta, Double precio) {
+		if(cuenta instanceof Premium) {
+			precio *= 0.50;
+		}
+		if(cuenta instanceof Classic) {
+			precio *= 0.25;
+		}
+		return precio;
 	}
+	
+	public Boolean cambiarCalidadCancion(Cuenta cuenta, Calidad calidad) {
+		if(cuenta instanceof Premium) {
+			this.setCalidad(calidad);
+			return true;
+		}
+		if(cuenta instanceof Free) { //En Free no se puede cambiar la calidad
+			return false;
+		}
+		if(cuenta instanceof Classic) { //En Classic no se puede utilizar la maxima calidad
+			if(calidad != Calidad.Maximo) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		return null;
+		
+	}
+	
+	public Boolean reproducirEnOtroDispositivo(Cuenta cuenta, Dispositivo dispositivo) {
+		if(cuenta instanceof Premium) {
+			this.setDispositivo(dispositivo);
+			return true;
+		}
+		if(cuenta instanceof Free) { //En Free no se puede cambiar la calidad
+				return false;
+		}
+		if(cuenta instanceof Classic) {
+				return true;
+		}
+		return null;
+	}
+
+	public Calidad getCalidad() {
+		return calidad;
+	}
+
+	public void setCalidad(Calidad calidad) {
+		this.calidad = calidad;
+	}
+
+	public Dispositivo getDispositivo() {
+		return dispositivo;
+	}
+
+	public void setDispositivo(Dispositivo dispositivo) {
+		this.dispositivo = dispositivo;
+	}
+}
 
